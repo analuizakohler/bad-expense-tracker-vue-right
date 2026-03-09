@@ -1,40 +1,80 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const emit = defineEmits(['add', 'clear']);
+const emit = defineEmits(["add-expense","clear-expenses"]);
 
-const title = ref('');
-const value = ref('');
-const category = ref('');
+const description = ref("");
+const value = ref("");
+const category = ref("");
 
-function submit() {
-  if (!title.value.trim() || !value.value.trim()) {
+const categories = [
+  "Comida",
+  "Transporte",
+  "Lazer",
+  "Compras",
+  "Outros"
+];
+
+function submitForm(){
+
+  if(!description.value || !value.value || !category.value){
+    alert("Preencha todos os campos");
     return;
   }
 
-  emit('add', {
-    title: title.value,
-    value: value.value,
-    category: category.value || 'other',
+  emit("add-expense",{
+    description: description.value,
+    value: Number(value.value),
+    category: category.value
   });
 
-  title.value = '';
-  value.value = '';
-  category.value = '';
+  description.value = "";
+  value.value = "";
+  category.value = "";
 }
 </script>
 
 <template>
-  <div class="panel">
-    <h2>Nova despesa</h2>
 
-    <input v-model="title" placeholder="Descricao" />
-    <input v-model="value" placeholder="Valor" />
-    <input v-model="category" placeholder="Categoria" />
+<div>
 
-    <div class="row">
-      <button @click="submit">Adicionar</button>
-      <button @click="$emit('clear')">Limpar tudo</button>
-    </div>
-  </div>
+  <h3>Nova despesa</h3>
+
+  <input
+    v-model="description"
+    placeholder="Descrição"
+  />
+
+  <input
+    v-model="value"
+    type="number"
+    placeholder="Valor"
+  />
+
+  <select v-model="category">
+
+    <option disabled value="">
+      Escolha uma categoria
+    </option>
+
+    <option
+      v-for="cat in categories"
+      :key="cat"
+      :value="cat"
+    >
+      {{ cat }}
+    </option>
+
+  </select>
+
+  <button @click="submitForm">
+    Adicionar
+  </button>
+
+  <button @click="$emit('clear-expenses')">
+    Limpar tudo
+  </button>
+
+</div>
+
 </template>

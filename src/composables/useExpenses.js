@@ -1,52 +1,44 @@
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 export function useExpenses() {
-  const expenses = ref([
-    { id: 1, title: 'Cafe', value: 6, category: 'food' },
-    { id: 2, title: 'Onibus', value: 4.5, category: 'transport' },
-    { id: 3, title: 'Lanche', value: 12, category: 'food' },
-  ]);
 
-  const filter = ref('all');
-
-  const filtered = computed(() => {
-    if (filter.value === 'all') return expenses.value;
-    return expenses.value.filter(
-      (item) => item.category === filter.value
-    );
-  });
-
-  const total = computed(() =>
-    expenses.value.reduce(
-      (sum, item) => sum + Number(item.value || 0),
-      0
-    )
-  );
+  const expenses = ref([]);
+  const filter = ref("Tudo");
 
   function addExpense(expense) {
     expenses.value.push({
       id: Date.now(),
-      ...expense,
+      ...expense
     });
   }
 
-  function removeExpense(id) {
-    expenses.value = expenses.value.filter(
-      (item) => item.id !== id
-    );
-  }
-
-  function clearAll() {
+  function clearExpenses() {
     expenses.value = [];
   }
+
+  const filteredExpenses = computed(() => {
+    if (filter.value === "Tudo") {
+      return expenses.value;
+    }
+
+    return expenses.value.filter(
+      (expense) => expense.category === filter.value
+    );
+  });
+
+  const total = computed(() => {
+    return filteredExpenses.value.reduce(
+      (sum, expense) => sum + Number(expense.value),
+      0
+    );
+  });
 
   return {
     expenses,
     filter,
-    filtered,
+    filteredExpenses,
     total,
     addExpense,
-    removeExpense,
-    clearAll,
+    clearExpenses
   };
 }

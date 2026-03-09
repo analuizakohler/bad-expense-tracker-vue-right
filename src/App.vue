@@ -1,40 +1,62 @@
 <script setup>
-import ExpenseHeader from './components/ExpenseHeader.vue';
-import ExpenseForm from './components/ExpenseForm.vue';
-import ExpenseList from './components/ExpenseList.vue';
-import { useExpenses } from './composables/useExpenses';
+
+import ExpenseHeader from "./components/ExpenseHeader.vue"
+import ExpenseForm from "./components/ExpenseForm.vue"
+import ExpenseList from "./components/ExpenseList.vue"
+
+import { useExpenses } from "./composables/useExpenses"
 
 const {
   filter,
-  filtered,
+  filteredExpenses,
   total,
   addExpense,
   removeExpense,
-  clearAll
-} = useExpenses();
+  clearExpenses
+} = useExpenses()
+
+function setFilter(value){
+  filter.value = value
+}
+
 </script>
 
 <template>
-  <div class="app">
 
-    <ExpenseHeader
-      @changeFilter="filter = $event"
-    />
+<div class="container">
 
-    <div class="layout">
+<h1 class="title">
+Controle de Gastos
+</h1>
 
-      <ExpenseForm
-        @add="addExpense"
-        @clear="clearAll"
-      />
+<ExpenseHeader
+:filter="filter"
+@set-filter="setFilter"
+/>
 
-      <ExpenseList
-        :items="filtered"
-        :total="total"
-        @remove="removeExpense"
-      />
+<div class="content">
 
-    </div>
+<div class="card">
 
-  </div>
+<ExpenseForm
+@add-expense="addExpense"
+@clear-expenses="clearExpenses"
+/>
+
+</div>
+
+<div class="card">
+
+<ExpenseList
+:expenses="filteredExpenses"
+:total="total"
+@remove-expense="removeExpense"
+/>
+
+</div>
+
+</div>
+
+</div>
+
 </template>
