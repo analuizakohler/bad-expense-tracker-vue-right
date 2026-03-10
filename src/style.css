@@ -5,7 +5,7 @@
 body{
   margin:0;
   font-family:system-ui,-apple-system,Arial;
-  background:#ede0d4;
+  background:#abbdce;
 }
 
 .container{
@@ -37,9 +37,10 @@ input, select{
   width:100%;
   padding:12px;
   margin-bottom:12px;
-  border:1px solid #ddd;
+  border:1px solid #51576f;
   border-radius:6px;
   font-size:16px;
+  background-color: #dde8f5;
 }
 
 button{
@@ -51,10 +52,11 @@ button{
   font-size:16px;
   cursor:pointer;
   color: black;
+  background-color: #dde8f5;
 }
 
 button.primary{
-  background:#4a90e2;
+  background:#000000;
   color: #7f5539;
 }
 
@@ -77,7 +79,15 @@ button.danger{
 .filters button{
   flex:1;
   min-width:90px;
-  background:#e9eef3;
+  background:#cadae9;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.filters button:active,
+.filters button:hover {
+  color: white;
+  background: #09294d;
 }
 
 .expense-card{
