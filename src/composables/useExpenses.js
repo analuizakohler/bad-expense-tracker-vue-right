@@ -1,7 +1,6 @@
 import { ref, computed } from "vue";
 
 export function useExpenses() {
-
   const expenses = ref([]);
   const filter = ref("Tudo");
 
@@ -10,6 +9,10 @@ export function useExpenses() {
       id: Date.now(),
       ...expense
     });
+  }
+
+  function removeExpense(id) {
+    expenses.value = expenses.value.filter((expense) => expense.id !== id);
   }
 
   function clearExpenses() {
@@ -39,6 +42,7 @@ export function useExpenses() {
     filteredExpenses,
     total,
     addExpense,
+    removeExpense,
     clearExpenses
   };
 }
